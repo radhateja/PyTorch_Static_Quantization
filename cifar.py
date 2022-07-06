@@ -104,7 +104,8 @@ def train_model(model,
                 test_loader,
                 device,
                 learning_rate=1e-1,
-                num_epochs=200):
+                num_epochs=20
+                ):
 
     # The training configurations were not carefully selected.
 
@@ -346,7 +347,7 @@ def main():
                         test_loader=test_loader,
                         device=cuda_device,
                         learning_rate=1e-1,
-                        num_epochs=200)
+                        num_epochs=20)
     # Save model.
     save_model(model=model, model_dir=model_dir, model_filename=model_filename)
     # Load a pretrained model.
@@ -378,12 +379,10 @@ def main():
                         torch.quantization.fuse_modules(sub_block,
                                                         [["0", "1"]],
                                                         inplace=True)
-
     # Print FP32 model.
     print(model)
     # Print fused model.
     print(fused_model)
-
     # Model and fused model should be equivalent.
     assert model_equivalence(
         model_1=model,
